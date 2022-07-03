@@ -1,0 +1,144 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+	<title>
+		Find Probability
+	</title>
+	<style>
+		.img {
+			display: flex;
+			justify-content: center;
+			align-items: center;
+			width: 100%;
+			height: 100%;
+		}
+
+		.ball_img {
+			display: flex;
+			justify-content: center;
+			align-items: stretch;
+			height: 150px;
+			width: 150px;
+			border-radius: 50%;
+			margin: 15px;
+			border: 1px solid grey;
+		}
+
+	</style>
+</head>
+
+<body style="text-align:center;">
+	<h1 style="color:green;">
+		Probability Ball Game
+	</h1>
+	<select id="ball" onchange="setBall()">
+		<option value="" selected disabled>Choose a Ball</option>
+		<option value="Red">Red Ball</option>
+		<option value="Green">Green Ball</option>
+		<option value="Blue">Blue Ball</option>
+	</select><br>
+	<div class="main_img">
+		<div class="img">
+			<div class="ball_img">
+				<img src="./img/ball2.png" class="img">
+			</div>
+		</div>
+	</div>
+
+	<p>Enter the Number of times you want to draw the ball</p>
+	<input id="userInput" type="text" placeholder="Text">
+	<button id="btn" onclick="returnNum()">Submit</button>
+
+	<h3>Probability: <span id="probability" value="0"></span>
+	</h3>
+
+	<script>
+		var up = document.getElementById('Basket');
+		var down = document.getElementById('Ball');
+
+		var ball;
+		var num;
+		var i;
+		var ball_drawn;
+		let count = 0;
+		let len;
+		var prob;
+
+		var arr1 = ["Red", "Green", "Blue"];
+		var arr2 = [];
+
+		const btn = document.getElementById('btn');
+
+		btn.addEventListener('click', function handleClick(event) {
+			event.preventDefault();
+			const inputs = document.querySelectorAll('#ball, #userInput, #probability');
+			inputs.forEach(input => {
+				input.value = '';
+			});
+			while (arr2.length > 0) {
+				arr2.pop();
+			}
+			if (count > 0) {
+				count = 0;
+			}
+		});
+
+
+		function setBall() {
+			ball = document.getElementById('ball').value;
+			const note = document.querySelector('.ball_img');
+			if (ball == "Red") {
+				note.style.backgroundColor = 'red';
+			}
+			else if (ball == "Green") {
+				note.style.backgroundColor = 'green';
+			}
+			else if (ball == "Blue") {
+				note.style.backgroundColor = 'blue';
+			}
+		}
+
+		function returnNum() {
+			event.preventDefault();
+			num = document.getElementById("userInput").value;
+			console.log("You Selected: " + ball + " Ball and " + num + " itrations");
+			Ran_Fun();
+			Probability_Ball();
+
+			function random(mn, mx) {
+				return Math.random() * (mx - mn) + mn;
+			}
+
+			function Ran_Fun() {
+				for (i = 0; i < num; i++) {
+					ball_drawn = arr1[Math.floor(random(1, 4)) - 1];
+					if (ball_drawn == ball) {
+						count = count + 1;
+					}
+					arr2.push(ball_drawn)
+				}
+				document.getElementById("probability").innerHTML = prob;
+				console.log(ball + " ball was drawn " + count + " times")
+			}
+			len = arr2.length;
+
+			console.log("Balls in Array2: " + arr2)
+			console.log("Number of Balls in Array2: " + len)
+
+			function Probability_Ball() {
+				prob = count / num;
+
+				console.log("count: " + count)
+				console.log("length: " + num)
+
+				var result = parseFloat(prob).toFixed(4);
+				document.getElementById("probability").innerHTML = result;
+				console.log("Probability: " + result)
+			}
+
+		}
+	</script>
+</body>
+
+</html>
