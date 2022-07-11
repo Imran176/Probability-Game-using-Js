@@ -140,7 +140,6 @@
 				if (result > 0){
 					document.querySelector("#probability").innerHTML = result;
 					document.querySelector("#alert-msg").innerHTML = '';
-					document.querySelector("#userInput").value = '';
 					console.log("Probability: " + result)
 				}
 				else{
